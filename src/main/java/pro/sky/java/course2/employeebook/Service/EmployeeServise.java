@@ -2,7 +2,7 @@ package pro.sky.java.course2.employeebook.Service;
 
 import pro.sky.java.course2.employeebook.Employee;
 
-import java.util.List;
+import java.util.Map;
 
 public interface EmployeeServise {
 
@@ -12,5 +12,5 @@ public interface EmployeeServise {
 
     Employee findEmployee(Employee employee);
 
-    List printEmployee();
+    Map<String, Employee> printEmployee();
 }

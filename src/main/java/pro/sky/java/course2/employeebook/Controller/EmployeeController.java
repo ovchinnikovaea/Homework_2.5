@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.sky.java.course2.employeebook.Employee;
 import pro.sky.java.course2.employeebook.Service.EmployeeServise;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/employee")
@@ -36,13 +39,15 @@ public class EmployeeController {
 
     @GetMapping("/find")
     public Employee findEmployee(@RequestParam("firstName") String firstname,
-                               @RequestParam("lastName") String lastname) {
+                                 @RequestParam("lastName") String lastname) {
+
         Employee employee = new Employee(firstname, lastname);
         return employeeServise.findEmployee(employee);
     }
 
     @GetMapping("/print")
-    public List printEmployee() {
+    public Map<String, Employee> printEmployee() {
+
         return employeeServise.printEmployee();
 
     }
