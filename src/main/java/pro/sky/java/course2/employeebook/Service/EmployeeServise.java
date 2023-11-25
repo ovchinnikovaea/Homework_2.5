@@ -6,11 +6,12 @@ import java.util.Map;
 
 public interface EmployeeServise {
 
-    Employee addEmployee(Employee employee);
+    Employee addEmployee(String firstName, String lastname, Integer department, Integer salary);
 
-    Employee removeEmployee(Employee employee);
+    Employee removeEmployee(String firstName, String lastname);
 
-    Employee findEmployee(Employee employee);
+    Employee findEmployee(String firstName, String lastname);
 
     Map<String, Employee> printEmployee();
+
 }

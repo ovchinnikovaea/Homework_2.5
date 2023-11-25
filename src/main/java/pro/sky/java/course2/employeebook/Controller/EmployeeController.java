@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.sky.java.course2.employeebook.Employee;
 import pro.sky.java.course2.employeebook.Service.EmployeeServise;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,29 +16,29 @@ public class EmployeeController {
     private final EmployeeServise employeeServise;
 
     public EmployeeController(EmployeeServise employeeServise) {
+
         this.employeeServise = employeeServise;
     }
 
     @GetMapping("/add")
     public Employee addEmployee(@RequestParam("firstName") String firstname,
-                                @RequestParam("lastName") String lastname) {
-        Employee employee = new Employee(firstname, lastname);
-        return employeeServise.addEmployee(employee);
+                                @RequestParam("lastName") String lastname,
+                                @RequestParam("department") Integer department,
+                                @RequestParam("salary") Integer salary) {
+        return employeeServise.addEmployee(firstname, lastname, department, salary);
     }
 
     @GetMapping("/remove")
     public Employee removeEmployee(@RequestParam("firstName") String firstname,
-                                 @RequestParam("lastName") String lastname) {
-        Employee employee = new Employee(firstname, lastname);
-        return employeeServise.removeEmployee(employee);
+                                   @RequestParam("lastName") String lastname) {
+        return employeeServise.removeEmployee(firstname, lastname);
 
     }
 
     @GetMapping("/find")
     public Employee findEmployee(@RequestParam("firstName") String firstname,
                                  @RequestParam("lastName") String lastname) {
-        Employee employee = new Employee(firstname, lastname);
-        return employeeServise.findEmployee(employee);
+        return employeeServise.findEmployee(firstname, lastname);
     }
 
     @GetMapping("/print")
@@ -48,5 +46,6 @@ public class EmployeeController {
         return employeeServise.printEmployee();
 
     }
+
 }
 
