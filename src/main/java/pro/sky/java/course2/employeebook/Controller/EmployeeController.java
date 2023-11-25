@@ -9,6 +9,7 @@ import pro.sky.java.course2.employeebook.Service.EmployeeServise;
 
 import java.util.Map;
 
+
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -39,10 +40,12 @@ public class EmployeeController {
     public Employee findEmployee(@RequestParam("firstName") String firstname,
                                  @RequestParam("lastName") String lastname) {
         return employeeServise.findEmployee(firstname, lastname);
+
     }
 
     @GetMapping("/print")
     public Map<String, Employee> printEmployee() {
+
         return employeeServise.printEmployee();
 
     }
