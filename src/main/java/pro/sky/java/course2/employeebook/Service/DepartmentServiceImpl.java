@@ -2,6 +2,7 @@ package pro.sky.java.course2.employeebook.Service;
 
 import org.springframework.stereotype.Service;
 import pro.sky.java.course2.employeebook.Employee;
+import pro.sky.java.course2.employeebook.exception.EmployeeNotFoundException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -24,7 +25,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .stream()
                 .filter(employee -> departmentId.equals(employee.getDepartment()))
                 .max(Comparator.comparingInt(Employee::getSalary))
-                .orElse(null);
+                .orElseThrow(() -> new EmployeeNotFoundException("Отдел не найден!"));
     }
 
     @Override
@@ -33,7 +34,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .stream()
                 .filter(employee -> departmentId.equals(employee.getDepartment()))
                 .min(Comparator.comparingInt(Employee::getSalary))
-                .orElse(null);
+                .orElseThrow(() -> new EmployeeNotFoundException("Отдел не найден!"));
     }
 
     @Override
