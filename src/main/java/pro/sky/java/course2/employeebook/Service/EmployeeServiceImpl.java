@@ -1,15 +1,19 @@
 package pro.sky.java.course2.employeebook.Service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.java.course2.employeebook.Employee;
 import pro.sky.java.course2.employeebook.exception.EmployeeAlreadyAddedException;
 import pro.sky.java.course2.employeebook.exception.EmployeeNotFoundException;
 import pro.sky.java.course2.employeebook.exception.EmployeeStorageIsFullException;
+import pro.sky.java.course2.employeebook.exception.InvalidateInputException;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.apache.commons.lang3.StringUtils.isAlpha;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeServise {
@@ -20,6 +24,8 @@ public class EmployeeServiceImpl implements EmployeeServise {
 
     @Override
     public Employee addEmployee(String firstName, String lastName, Integer department, Integer salary) {
+
+        validateInput(firstName, lastName);
 
         if (employees.size() > MAX_NUMBERS) {
             throw new EmployeeStorageIsFullException("Превышен лимит сотрудников фирмы");
@@ -35,6 +41,9 @@ public class EmployeeServiceImpl implements EmployeeServise {
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
+
+        validateInput(firstName, lastName);
+
         if (!employees.containsKey(getKey(firstName, lastName))) {
             throw new EmployeeNotFoundException("Невозможно удалить, такой сотрудник не найден");
         }
@@ -43,6 +52,9 @@ public class EmployeeServiceImpl implements EmployeeServise {
 
     @Override
     public Employee findEmployee(String firstName, String lastName) {
+
+        validateInput(firstName, lastName);
+
         Employee employee = employees.get(getKey(firstName, lastName));
         if (!employees.containsKey(getKey(firstName, lastName))) {
             throw new EmployeeNotFoundException("Сотрудник не найден");
@@ -55,13 +67,19 @@ public class EmployeeServiceImpl implements EmployeeServise {
         return Collections.unmodifiableMap(employees);
     }
 
-    private static String getKey (String firstName, String lastName) {
+    private static String getKey(String firstName, String lastName) {
         return firstName + lastName;
     }
-    private static String getKey (Employee employee) {
+
+    private static String getKey(Employee employee) {
         return employee.getFullName();
     }
 
+    private void validateInput(String firstName, String lastName) {
+        if (!(isAlpha(firstName) && isAlpha(lastName))) {
+            throw new InvalidateInputException();
+        }
+    }
 }
 
 
