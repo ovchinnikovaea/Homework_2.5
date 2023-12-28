@@ -20,21 +20,21 @@ public class EmployeeServiceImpl implements EmployeeServise {
 
     private final Map<String, Employee> employees = new HashMap<>();
 
-    private final int MAX_NUMBERS = 15;
+    private final int MAX_NUMBERS = 4;
 
     @Override
     public Employee addEmployee(String firstName, String lastName, Integer department, Integer salary) {
 
         validateInput(firstName, lastName);
 
-        if (employees.size() > MAX_NUMBERS) {
+        if (employees.size() >= MAX_NUMBERS) {
             throw new EmployeeStorageIsFullException("Превышен лимит сотрудников фирмы");
         }
         if (employees.containsKey(getKey(firstName, lastName))) {
             throw new EmployeeAlreadyAddedException("Невозможно добавить, такой сотрудник уже существует");
         }
         Employee employee = new Employee(firstName, lastName, department, salary);
-        employees.put(employee.getFullName(), employee);
+        employees.put(getKey(firstName, lastName), employee);
         return employee;
     }
 
